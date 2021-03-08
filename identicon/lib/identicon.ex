@@ -57,10 +57,8 @@ defmodule Identicon do
 
       top_left = {horizontal, vertical}
       bottom_right = {horizontal + 50, vertical + 50}
-      coordenates = {top_left, bottom_right}
+      {top_left, bottom_right}
 
-
-      coordenates
     end
     %Identicon.Image{image | pixel_map: pixel_map}
   end
