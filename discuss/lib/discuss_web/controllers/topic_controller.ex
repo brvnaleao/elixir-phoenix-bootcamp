@@ -44,14 +44,22 @@ defmodule DiscussWeb.TopicController do
     topic = Discuss.Repo.get!(Topic, topic_id)
     changeset = Ecto.Changeset.change topic, %{title: title["title"]}
 
-    case Discuss.Repo.update changeset do
-      {:ok, _struct} ->
-        conn
-        |> put_flash(:info, "Topic Updated")
-        |> redirect(to: Routes.topic_path(conn, :index))
-      {:error, changeset} ->
-          render conn, "edit.html", changeset: changeset
+    case title["title"] do
+
+      "" -> render conn, "edit.html", changeset: changeset, topic: topic
+
+      _ ->
+        case Discuss.Repo.update changeset do
+          {:ok, _struct} ->
+            conn
+            |> put_flash(:info, "Topic Updated")
+            |> redirect(to: Routes.topic_path(conn, :index))
+          {:error, changeset} ->
+              render conn, "edit.html", changeset: changeset
+        end
+
     end
+
 
   end
 
